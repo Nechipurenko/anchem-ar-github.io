@@ -47,7 +47,7 @@ AFRAME.registerComponent('run', {
       this.A.object3D.getWorldPosition(this.p0); 
       this.B.object3D.getWorldPosition(this.p1); 
       distance = this.p0.distanceTo( this.p1 ); // меряем расстояние 
-      //console.log("AB = "+distance);   
+      console.log("AB = "+distance);   
       isReaction=(distance <= howmuch); //запуск реакции при предельном сближении маркеров
     } 
     if(isReaction) //если идет реакция
