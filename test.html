@@ -2,8 +2,6 @@
 <head>
 	<title>Тестове вікно</title>
 	<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-
-<!--	<script src="AR.js-master/aframe/build/aframe-ar.js"></script>     -->
 	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js">
 </head>
 <body>
@@ -24,11 +22,9 @@ AFRAME.registerComponent('registerevents', {
       this.dB = document.querySelector("#drawB"); 
       this.dA.setAttribute("visible", "true");
       this.dB.setAttribute("visible", "true");
-      //console.log("found "+marker.id);
     }); 
     marker.addEventListener('markerLost', function() { 
       markerVisible[ marker.id ] = false; 
-      //console.log("lost "+marker.id);
     }); 
   } 
 }); 
@@ -60,7 +56,6 @@ AFRAME.registerComponent('run', {
        this.dB.setAttribute("visible", "false");
        this.dX.setAttribute("visible", "true");
        this.dY.setAttribute("visible", "true");
-//       this.dB.visible=false;
        if ( markerVisible["A"] || markerVisible["B"]  ) // если виден хотя бы один из маркеров
        { 
           if(markerVisible["A"] && markerVisible["B"] ) // видны оба маркера
@@ -78,7 +73,7 @@ AFRAME.registerComponent('run', {
              this.dX.setAttribute("visible", "false");
              this.dY.setAttribute("visible", "true");
           }                   
-         console.log("distance = "+distance);//что-то показываем
+         console.log("distance = "+distance);//что-то показываем, потом убрать
        }
        else//если ни одного маркера не видно
        {
@@ -111,10 +106,9 @@ AFRAME.registerComponent('run', {
 
   <a-marker type="pattern" 
 url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/multi-abcdef/patt.a" id="A" registerevents> 
-  <!--<a-plane src="https://live.staticflickr.com/3103/2420240470_bc0bb7a260.jpg" rotation="-90 0 0" id="drawA"></a-plane>-->
+  <a-plane src="https://live.staticflickr.com/3103/2420240470_bc0bb7a260.jpg" rotation="-90 0 0" id="drawA"></a-plane>
  <!-- <a-plane src="https://live.staticflickr.com/3097/2295905317_585b606a01_b.jpg" position="1 0 0" rotation="-90 0 0" id="drawX" visible="false"></a-plane>-->
- <a-video src="#video" position="0 0 0" rotation="90 0 0">
-  <a-video src="#video" autoplay loop="true" position="1 0 0" rotation="90 0 0" id="drawX" visible="false">
+   <a-video src="#video" autoplay loop="true" position="1 0 0" rotation="90 0 0" id="drawX" visible="false">
 
 <!--
     <a-sphere radius="0.10" color="green"></a-sphere> 
