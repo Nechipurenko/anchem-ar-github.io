@@ -1,0 +1,148 @@
+<html>
+<head>
+	<title>Тестове вікно</title>
+	<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+
+<!--	<script src="AR.js-master/aframe/build/aframe-ar.js"></script>     -->
+	<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js">
+</head>
+<body>
+<script>
+
+const howmuch=1.3;
+
+let isReaction = false;
+let distance = howmuch+1;
+
+let markerVisible = { A: false, B: false }; 
+AFRAME.registerComponent('registerevents', { 
+  init: function () { 
+    let marker = this.el; 
+    marker.addEventListener('markerFound', function() { 
+      markerVisible[ marker.id ] = true; 
+      this.dA = document.querySelector("#drawA"); 
+      this.dB = document.querySelector("#drawB"); 
+      this.dA.setAttribute("visible", "true");
+      this.dB.setAttribute("visible", "true");
+      //console.log("found "+marker.id);
+    }); 
+    marker.addEventListener('markerLost', function() { 
+      markerVisible[ marker.id ] = false; 
+      //console.log("lost "+marker.id);
+    }); 
+  } 
+}); 
+
+AFRAME.registerComponent('run', { 
+  init: function() { 
+    this.A = document.querySelector("#A"); 
+    this.B = document.querySelector("#B"); 
+    this.dA = document.querySelector("#drawA"); 
+    this.dB = document.querySelector("#drawB"); 
+    this.dX = document.querySelector("#drawX"); 
+    this.dY = document.querySelector("#drawY"); 
+    this.p0 = new THREE.Vector3(); 
+    this.p1 = new THREE.Vector3();  
+  }, 
+ 
+  tick: function (time, deltaTime) { 
+    if ( markerVisible["A"] && markerVisible["B"] ) // видны оба маркера
+    { 
+      this.A.object3D.getWorldPosition(this.p0); 
+      this.B.object3D.getWorldPosition(this.p1); 
+      distance = this.p0.distanceTo( this.p1 ); // меряем расстояние 
+      //console.log("AB = "+distance);   
+      isReaction=(distance <= howmuch); //запуск реакции при предельном сближении маркеров
+    } 
+    if(isReaction) //если идет реакция
+    {
+       this.dA.setAttribute("visible", "false");
+       this.dB.setAttribute("visible", "false");
+       this.dX.setAttribute("visible", "true");
+       this.dY.setAttribute("visible", "true");
+//       this.dB.visible=false;
+       if ( markerVisible["A"] || markerVisible["B"]  ) // если виден хотя бы один из маркеров
+       { 
+          if(markerVisible["A"] && markerVisible["B"] ) // видны оба маркера
+          {
+             this.dX.setAttribute("visible", "true");
+             this.dY.setAttribute("visible", "false");
+          }                   
+          if(markerVisible["A"] && !markerVisible["B"] ) // виден А, не виден B
+          {
+             this.dX.setAttribute("visible", "true");
+             this.dY.setAttribute("visible", "false");
+          }                   
+          if(!markerVisible["A"] && markerVisible["B"] ) // не виден А, виден B
+          {
+             this.dX.setAttribute("visible", "false");
+             this.dY.setAttribute("visible", "true");
+          }                   
+         console.log("distance = "+distance);//что-то показываем
+       }
+       else//если ни одного маркера не видно
+       {
+         isReaction=false;
+         this.dA.setAttribute("visible", "true");
+         this.dB.setAttribute("visible", "true");
+         this.dX.setAttribute("visible", "false");
+         this.dY.setAttribute("visible", "false");
+       }
+    }
+
+    if(!isReaction) //если не идет реакция
+    {
+       this.dA = document.querySelector("#drawA"); 
+       this.dB = document.querySelector("#drawB"); 
+       this.dA.setAttribute("visible", "true");
+       this.dB.setAttribute("visible", "true");
+       this.dX.setAttribute("visible", "false");
+       this.dY.setAttribute("visible", "false");
+    }
+  } 
+}); 
+
+
+</script>
+<a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false; detectionMode: mono_and_matrix;"> 
+  <a-assets>
+    <video id="video" autoplay loop="true" src="https://raw.githubusercontent.com/AR-js-org/AR.js/master/test/data/videos/markers-page-ipad.mp4"></video>
+  </a-assets>
+
+  <a-marker type="pattern" 
+url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/multi-abcdef/patt.a" id="A" registerevents> 
+  <a-plane src="https://live.staticflickr.com/3103/2420240470_bc0bb7a260.jpg" rotation="-90 0 0" id="drawA"></a-plane>
+ <!-- <a-plane src="https://live.staticflickr.com/3097/2295905317_585b606a01_b.jpg" position="1 0 0" rotation="-90 0 0" id="drawX" visible="false"></a-plane>-->
+ <!-- <a-video src="#video" autoplay loop="true" position="0 0 0" rotation="90 0 0">-->
+  <a-video src="#video" autoplay loop="true" position="1 0 0" rotation="90 0 0" id="drawX" visible="false">
+
+<!--
+    <a-sphere radius="0.10" color="green"></a-sphere> 
+    <a-entity id="lineAB"></a-entity>   -->
+  </a-marker> 
+  <a-marker type="pattern" 
+url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/multi-abcdef/patt.b" id="B" registerevents> 
+  <a-plane src="https://live.staticflickr.com/1757/41821018565_614db58ddc_b.jpg" rotation="-90 0 0" id="drawB"></a-plane>
+  <a-video src="#video" autoplay loop="true" position="1 0 0" rotation="90 0 0" id="drawY" visible="false">
+<!--
+  <a-plane src="https://live.staticflickr.com/3097/2295905317_585b606a01_b.jpg" position="1 0 0" rotation="-90 0 0" id="drawY" visible="false"></a-plane>
+-->
+<!--
+    <a-sphere radius="0.10" color="blue"></a-sphere> 
+    <a-entity id="lineBC"></a-entity> 
+-->
+  </a-marker> 
+<!--
+  <a-marker type="pattern" 
+url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/multi-abcdef/patt.c" id="C" registerevents> 
+    <a-sphere radius="0.10" color="red"></a-sphere> 
+    <a-entity id="lineAC"></a-entity> 
+  </a-marker> 
+-->
+  <a-entity camera></a-entity> 
+  <a-entity run></a-entity> 
+</a-scene> 
+
+</body>
+</html>
+
