@@ -101,14 +101,16 @@ AFRAME.registerComponent('run', {
 </script>
 <a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false; detectionMode: mono_and_matrix;"> 
   <a-assets>
-    <video id="video" autoplay loop="true" src="VID_2.mp4"></video>
+    <video id="video" preload="auto" autoplay loop="true" src="VID_2.mp4"></video>
   </a-assets>
 
   <a-marker type="pattern" 
 url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/multi-abcdef/patt.a" id="A" registerevents> 
   <a-plane src="https://live.staticflickr.com/3103/2420240470_bc0bb7a260.jpg" rotation="-90 0 0" id="drawA"></a-plane>
   <!--<a-plane src="https://live.staticflickr.com/3097/2295905317_585b606a01_b.jpg" position="1 0 0" rotation="-90 0 0" id="drawX" visible="false"></a-plane>-->
-  <a-video src="#video" autoplay loop="true" position="1 0 0" rotation="-90 0 0" id="drawX" visible="false">
+  <!--<a-video src="#video" autoplay loop="true" position="1 0 0" rotation="-90 0 0" id="drawX" visible="false">-->
+<a-entity material="shader: flat; src: #video" geometry="primitive: plane; width: 1.60; height: 0.90;" position="-0.5 0 -1.5" 
+				rotation="-90 0 0" id="drawX" visible="false"></a-entity>	  
   </a-marker> 
   <a-marker type="pattern" 
 url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/multi-abcdef/patt.b" id="B" registerevents> 
