@@ -162,7 +162,7 @@ AFRAME.registerComponent('run', {
 <a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false; detectionMode: mono_and_matrix;"> 
   <a-assets>
     <video id="video" preload="auto" autoplay loop="true" src="VID_2.mp4"></video>
-    <video id="video1" preload="auto" autoplay loop="true" src="video_3.mp4"></video>
+    <video id="video-a" preload="auto" autoplay loop="true" src="video_3.mp4"></video>
   </a-assets>
 
   <a-marker type="pattern" 
@@ -172,8 +172,7 @@ url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/
   <!--<a-video src="#video" autoplay loop="true" position="1 0 0" rotation="-90 0 0" id="drawX" visible="false">-->
 <a-entity material="shader: flat; src: #video" geometry="primitive: plane; width: 1.60; height: 0.90;" position="-0.5 0 -1.5" 
 				rotation="-90 0 0" id="drawX" visible="false"></a-entity>
-<a-entity material="shader: flat; src: #video1" geometry="primitive: plane; width: 1.60; height: 0.90;" position="-0.5 0 -1.5" 
-				rotation="-90 0 0" id="drawZ" visible="false"></a-entity>
+	  
   </a-marker> 
   <a-marker type="pattern" 
 url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/multi-abcdef/patt.b" id="B" registerevents> 
@@ -184,8 +183,8 @@ url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/
 	  
   <a-marker type="pattern" 
 url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/multi-abcdef/patt.c" id="C" registerevents> 
-  <a-plane src="https://www.flickr.com/photos/53921113@N02/5645102295" rotation="-90 0 0" id="drawC"></a-plane>
-  <a-entity material="shader: flat; src: #video1" geometry="primitive: plane; width: 1.60; height: 0.90;" position="-0.5 0 -1.5" 
+  <a-plane src="https://live.staticflickr.com/1757/41821018565_614db58ddc_b.jpg" rotation="-90 0 0" id="drawB" rotation="-90 0 0" id="drawC"></a-plane>
+  <a-entity material="shader: flat; src: #video-a" geometry="primitive: plane; width: 1.60; height: 0.90;" position="-0.5 0 -1.5" 
 				rotation="-90 0 0" id="drawZ1" visible="false"></a-entity>
   <!--<a-plane src="https://live.staticflickr.com/3097/2295905317_585b606a01_b.jpg" position="1 0 0" rotation="-90 0 0" id="drawY" visible="false"></a-plane>-->
   </a-marker> 
