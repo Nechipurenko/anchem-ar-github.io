@@ -140,7 +140,7 @@ AFRAME.registerComponent('run', {
     if ( markerVisible["A"] && markerVisible["C"] ) // видны оба маркера
     { 
       this.A.object3D.getWorldPosition(this.p0); 
-      this.B.object3D.getWorldPosition(this.p1); 
+      this.C.object3D.getWorldPosition(this.p1); 
       distance = this.p0.distanceTo( this.p1 ); // меряем расстояние 
       console.log("AC = "+distance);   
       isReaction=(distance <= howmuch); //запуск реакции при предельном сближении маркеров
