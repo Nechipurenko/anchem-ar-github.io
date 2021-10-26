@@ -100,8 +100,8 @@ AFRAME.registerComponent('run', {
        this.dX.setAttribute("visible", "false");
        this.dY.setAttribute("visible", "false");
     }
-  }
-    tick: function (time, deltaTime) { 
+  
+    tick: function (time, deltaTime) {
     if ( markerVisible["A"] && markerVisible["C"] ) // видны оба маркера
     { 
       this.A.object3D.getWorldPosition(this.p0); 
