@@ -104,7 +104,7 @@ AFRAME.registerComponent('run', {
 
 const howmucha=1.3
 
-let isReaction = false;
+let isReactiona = false;
 let distance = howmucha+1;
 
 let markerVisible = { A: false, C: false }; 
@@ -143,9 +143,9 @@ AFRAME.registerComponent('run', {
       this.C.object3D.getWorldPosition(this.p1); 
       distance = this.p0.distanceTo( this.p1 ); // меряем расстояние 
       console.log("AC = "+distance);   
-      isReaction=(distance <= howmucha); //запуск реакции при предельном сближении маркеров
+      isReactiona=(distance <= howmucha); //запуск реакции при предельном сближении маркеров
     } 
-    if(isReaction) //если идет реакция
+    if(isReactiona) //если идет реакция
     {
        this.dA.setAttribute("visible", "false");
        this.dC.setAttribute("visible", "false");
@@ -172,7 +172,7 @@ AFRAME.registerComponent('run', {
        }
        else//если ни одного маркера не видно
        {
-         isReaction=false;
+         isReactiona=false;
          this.dA.setAttribute("visible", "true");
          this.dC.setAttribute("visible", "true");
          this.dX.setAttribute("visible", "false");
@@ -180,7 +180,7 @@ AFRAME.registerComponent('run', {
        }
     }
 
-    if(!isReaction) //если не идет реакция
+    if(!isReactiona) //если не идет реакция
     {
        this.dA = document.querySelector("#drawA"); 
        this.dC = document.querySelector("#drawC"); 
