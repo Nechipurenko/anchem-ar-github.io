@@ -20,8 +20,10 @@ AFRAME.registerComponent('registerevents', {
       markerVisible[ marker.id ] = true; 
       this.dA = document.querySelector("#drawA"); 
       this.dB = document.querySelector("#drawB"); 
+      this.dC = document.querySelector("#drawC");
       this.dA.setAttribute("visible", "true");
       this.dB.setAttribute("visible", "true");
+      this.dC.setAttribute("visible", "true");
     }); 
     marker.addEventListener('markerLost', function() { 
       markerVisible[ marker.id ] = false; 
@@ -32,11 +34,15 @@ AFRAME.registerComponent('registerevents', {
 AFRAME.registerComponent('run', { 
   init: function() { 
     this.A = document.querySelector("#A"); 
-    this.B = document.querySelector("#B"); 
+    this.B = document.querySelector("#B");
+    this.C = document.querySelector("#C");
     this.dA = document.querySelector("#drawA"); 
-    this.dB = document.querySelector("#drawB"); 
+    this.dB = document.querySelector("#drawB");
+    this.dC = document.querySelector("#drawC"); 
     this.dX = document.querySelector("#drawX"); 
-    this.dY = document.querySelector("#drawY"); 
+    this.dY = document.querySelector("#drawY");
+    this.dZ = document.querySelector("#drawZ");
+    this.dZ1 = document.querySelector("#drawZ1");
     this.p0 = new THREE.Vector3(); 
     this.p1 = new THREE.Vector3();  
   }, 
@@ -93,15 +99,69 @@ AFRAME.registerComponent('run', {
        this.dB.setAttribute("visible", "true");
        this.dX.setAttribute("visible", "false");
        this.dY.setAttribute("visible", "false");
+    },
+  
+    tick: function (time, deltaTime) {
+    if ( markerVisible["A"] && markerVisible["C"] ) // видны оба маркера
+    { 
+      this.A.object3D.getWorldPosition(this.p0); 
+      this.C.object3D.getWorldPosition(this.p1); 
+      distance = this.p0.distanceTo( this.p1 ); // меряем расстояние 
+      console.log("AC = "+distance);   
+      isReaction=(distance <= howmuch); //запуск реакции при предельном сближении маркеров
+    } 
+    if(isReaction) //если идет реакция
+    {
+       this.dA.setAttribute("visible", "false");
+       this.dC.setAttribute("visible", "false");
+       this.dZ.setAttribute("visible", "true");
+       this.dZ1.setAttribute("visible", "true");
+       if ( markerVisible["A"] || markerVisible["C"]  ) // если виден хотя бы один из маркеров
+       { 
+          if(markerVisible["A"] && markerVisible["C"] ) // видны оба маркера
+          {
+             this.dZ.setAttribute("visible", "true");
+             this.dZ1.setAttribute("visible", "false");
+          }                   
+          if(markerVisible["A"] && !markerVisible["C"] ) // виден А, не виден B
+          {
+             this.dZ.setAttribute("visible", "true");
+             this.dZ1.setAttribute("visible", "false");
+          }                   
+          if(!markerVisible["A"] && markerVisible["C"] ) // не виден А, виден B
+          {
+             this.dZ.setAttribute("visible", "false");
+             this.dZ1.setAttribute("visible", "true");
+          }                   
+         console.log("distance = "+distance);//что-то показываем, потом убрать
+       }
+       else//если ни одного маркера не видно
+       {
+         isReaction=false;
+         this.dA.setAttribute("visible", "true");
+         this.dC.setAttribute("visible", "true");
+         this.dZ.setAttribute("visible", "false");
+         this.dZ1.setAttribute("visible", "false");
+       }
+    }
+
+    if(!isReaction) //если не идет реакция
+    {
+       this.dA = document.querySelector("#drawA"); 
+       this.dC = document.querySelector("#drawC"); 
+       this.dA.setAttribute("visible", "true");
+       this.dC.setAttribute("visible", "true");
+       this.dZ.setAttribute("visible", "false");
+       this.dZ1.setAttribute("visible", "false");
     }
   } 
-}); 
-
+});
 
 </script>
 <a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false; detectionMode: mono_and_matrix;"> 
   <a-assets>
     <video id="video" preload="auto" autoplay loop="true" src="VID_2.mp4"></video>
+    <video id="video-a" preload="auto" autoplay loop="true" src="video_3.mp4"></video>
   </a-assets>
 
   <a-marker type="pattern" 
@@ -110,12 +170,21 @@ url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/
   <!--<a-plane src="https://live.staticflickr.com/3097/2295905317_585b606a01_b.jpg" position="1 0 0" rotation="-90 0 0" id="drawX" visible="false"></a-plane>-->
   <!--<a-video src="#video" autoplay loop="true" position="1 0 0" rotation="-90 0 0" id="drawX" visible="false">-->
 <a-entity material="shader: flat; src: #video" geometry="primitive: plane; width: 1.60; height: 0.90;" position="-0.5 0 -1.5" 
-				rotation="-90 0 0" id="drawX" visible="false"></a-entity>	  
+				rotation="-90 0 0" id="drawX" visible="false"></a-entity>
+	  
   </a-marker> 
   <a-marker type="pattern" 
 url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/multi-abcdef/patt.b" id="B" registerevents> 
   <a-plane src="https://live.staticflickr.com/1757/41821018565_614db58ddc_b.jpg" rotation="-90 0 0" id="drawB"></a-plane>
   <a-video src="#video" autoplay loop="true" position="1 0 0" rotation="90 0 0" id="drawY" visible="false">
+  <!--<a-plane src="https://live.staticflickr.com/3097/2295905317_585b606a01_b.jpg" position="1 0 0" rotation="-90 0 0" id="drawY" visible="false"></a-plane>-->
+  </a-marker> 
+	  
+  <a-marker type="pattern" 
+url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/multi-abcdef/patt.c" id="C" registerevents> 
+  <a-plane src="https://live.staticflickr.com/1757/41821018565_614db58ddc_b.jpg" rotation="-90 0 0" id="drawB" rotation="-90 0 0" id="drawC"></a-plane>
+  <a-entity material="shader: flat; src: #video-a" geometry="primitive: plane; width: 1.60; height: 0.90;" position="-0.5 0 -1.5" 
+				rotation="-90 0 0" id="drawZ1" visible="false"></a-entity>
   <!--<a-plane src="https://live.staticflickr.com/3097/2295905317_585b606a01_b.jpg" position="1 0 0" rotation="-90 0 0" id="drawY" visible="false"></a-plane>-->
   </a-marker> 
   <a-entity camera></a-entity> 
@@ -124,4 +193,3 @@ url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/
 
 </body>
 </html>
-
