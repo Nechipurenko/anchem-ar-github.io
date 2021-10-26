@@ -99,7 +99,7 @@ AFRAME.registerComponent('run', {
        this.dB.setAttribute("visible", "true");
        this.dX.setAttribute("visible", "false");
        this.dY.setAttribute("visible", "false");
-    }
+    },
   
     tick: function (time, deltaTime) {
     if ( markerVisible["A"] && markerVisible["C"] ) // видны оба маркера
@@ -155,8 +155,7 @@ AFRAME.registerComponent('run', {
        this.dZ1.setAttribute("visible", "false");
     }
   } 
-}); 
-
+});
 
 </script>
 <a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false; detectionMode: mono_and_matrix;"> 
@@ -194,4 +193,3 @@ url="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/multimarkers/
 
 </body>
 </html>
-
