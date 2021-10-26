@@ -102,10 +102,10 @@ AFRAME.registerComponent('run', {
 	
 <script>
 
-<!--const howmuch=1.3;-->
+const howmucha=1.3
 
 let isReaction = false;
-let distance = howmuch+1;
+let distance = howmucha+1;
 
 let markerVisible = { A: false, C: false }; 
 AFRAME.registerComponent('registerevents', { 
@@ -143,7 +143,7 @@ AFRAME.registerComponent('run', {
       this.C.object3D.getWorldPosition(this.p1); 
       distance = this.p0.distanceTo( this.p1 ); // меряем расстояние 
       console.log("AC = "+distance);   
-      isReaction=(distance <= howmuch); //запуск реакции при предельном сближении маркеров
+      isReaction=(distance <= howmucha); //запуск реакции при предельном сближении маркеров
     } 
     if(isReaction) //если идет реакция
     {
