@@ -145,7 +145,7 @@ AFRAME.registerComponent('run', {
       console.log("AC = "+distancea);   
       isReactiona=(distancea <= howmucha); //запуск реакции при предельном сближении маркеров
     } 
-    if(isReaction) //если идет реакция
+    if(isReactiona) //если идет реакция
     {
        this.dA.setAttribute("visible", "false");
        this.dC.setAttribute("visible", "false");
